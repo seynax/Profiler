@@ -4,7 +4,6 @@ on: [ push, pull_request ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -17,5 +16,26 @@ jobs:
           distribution: 'adopt'
           java-version: '21'
 
+      - name: Set up Maven settings
+        run: echo "${{ secrets.MAVEN_SETTINGS }}" > $HOME/.m2/settings.xml
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
+
+      - name: Run JaCoCo
+        run: mvn test jacoco:report
+
+      - name: Run SpotBugs
+        run: mvn spotbugs:check
+
+      - name: Run OWASP Dependency Check
+        run: mvn dependency-check:check
+
+      - name: Check for Dependency Updates
+        run: mvn versions:display-dependency-updates
+
+      - name: Run Integration Tests
+        run: mvn failsafe:integration-test failsafe:verify
