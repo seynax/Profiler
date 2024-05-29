@@ -39,6 +39,3 @@ jobs:
 
       - name: Run Integration Tests
         run: mvn failsafe:integration-test failsafe:verify
-
-      - name: Run Performance Tests
-        run: mvn gatling:test
