@@ -1,11 +1,6 @@
 name: Java CI
 
 on:
-  push:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-      - '**/*.docx'
   pull_request:
     paths-ignore:
       - '**/*.md'
@@ -18,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [ 8, 11, 17, 21 ]
+        java-version: [ 21 ]
 
     steps:
       - name: Checkout code
@@ -46,7 +41,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        if: github.event_name != 'pull_request' || github.event.pull_request.changed_files > 1
 
   static-analysis:
     runs-on: ubuntu-latest
