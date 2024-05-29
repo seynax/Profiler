@@ -24,3 +24,6 @@ jobs:
 
       - name: Run SpotBugs
         run: mvn spotbugs:check
+
+      - name: Check for Dependency Updates
+        run: mvn versions:display-dependency-updates
