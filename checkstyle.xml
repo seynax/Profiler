@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.sourceforge.io/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <module name="TreeWalker">
+        <!-- Enforce method name conventions -->
+        <module name="MethodName">
+            <property name="format" value="^(?!get|set)[a-zA-Z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern" value="Method name ''{0}'' must not start with get, set."/>
+        </module>
+
+        <!-- Enforce parameter naming conventions -->
+        <module name="ParameterName">
+            <property name="format" value=".*In$"/>
+            <message key="name.invalidPattern" value="Parameter name ''{0}'' must end with ''In''."/>
+        </module>
+
+        <!-- Enforce the use of "this." for non-static fields and methods -->
+        <module name="RequireThis"/>
+        <module name="UnusedImports"/>
+
+        <!-- Enforce brace style -->
+        <module name="LeftCurly">
+            <property name="option" value="nl"/>
+        </module>
+    </module>
+</module>

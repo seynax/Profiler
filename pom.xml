@@ -33,7 +33,7 @@
     <scm>
         <connection>scm:git:git://github.com/Seynax/Profiler.git</connection>
         <developerConnection>scm:git:ssh://github.com:Seynax/Profiler.git</developerConnection>
-        <url>http://github.com/Seynax/Profiler</url>
+        <url>https://github.com/Seynax/Profiler</url>
     </scm>
 
     <profiles>
@@ -116,6 +116,26 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.6.3</version>
             </plugin>
+            <!-- Checkstyle Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
