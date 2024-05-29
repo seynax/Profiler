@@ -33,3 +33,6 @@ jobs:
 
       - name: Check for Dependency Updates
         run: mvn versions:display-dependency-updates
+
+      - name: Run Integration Tests
+        run: mvn failsafe:integration-test failsafe:verify
