@@ -100,6 +100,8 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
             <plugin>
