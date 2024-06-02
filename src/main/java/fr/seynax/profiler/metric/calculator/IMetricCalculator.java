@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public interface IMetricCalculator<V extends Number>
 {
-	EnumMetricMethods method();
+	String method();
 
 	EnumMetricSource[] sources();
 

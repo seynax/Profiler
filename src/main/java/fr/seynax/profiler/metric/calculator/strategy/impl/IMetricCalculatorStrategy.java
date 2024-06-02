@@ -1,4 +1,4 @@
-package fr.seynax.profiler.metric.calculator.strategy;
+package fr.seynax.profiler.metric.calculator.strategy.impl;
 
 import java.util.Collection;
 import java.util.Map;

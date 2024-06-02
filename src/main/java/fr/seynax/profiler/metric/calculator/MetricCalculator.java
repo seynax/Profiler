@@ -1,9 +1,7 @@
 package fr.seynax.profiler.metric.calculator;
 
-import fr.seynax.profiler.metric.calculator.EnumMetricMethods;
-import fr.seynax.profiler.metric.calculator.EnumMetricSource;
-import fr.seynax.profiler.metric.calculator.IMetricCalculator;
-import fr.seynax.profiler.metric.calculator.strategy.IMetricCalculatorStrategy;
+import fr.seynax.profiler.metric.calculator.strategy.IStrategyProvider;
+import fr.seynax.profiler.metric.calculator.strategy.impl.IMetricCalculatorStrategy;
 import fr.seynax.profiler.utils.IMeasurer;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,8 @@ import java.util.Map;
 
 public class MetricCalculator<V extends Number> implements IMetricCalculator<V> {
     private final IMeasurer<V> measurer;
-    private final @Getter EnumMetricMethods method;
+    private final IStrategyProvider strategyProvider;
+    private final @Getter String method;
     private final @Getter EnumMetricSource[] sources;
     private final @Getter Map<Long, V> measures;
     private final @Getter Map<Long, V> results;
@@ -21,12 +20,11 @@ public class MetricCalculator<V extends Number> implements IMetricCalculator<V> 
     private boolean isRunning;
     private boolean hasBeenStopped;
     private Thread thread;
-    private final IMetricCalculatorStrategy<V> strategy;
 
-    public MetricCalculator(IMeasurer<V> measurerIn, EnumMetricMethods methodIn, IMetricCalculatorStrategy<V> strategyIn, EnumMetricSource... sourcesIn) {
+    public MetricCalculator(IMeasurer<V> measurerIn, String methodIn, IStrategyProvider strategyProvider, EnumMetricSource... sourcesIn) {
         this.measurer = measurerIn;
         this.method = methodIn;
-        this.strategy = strategyIn;
+        this.strategyProvider = strategyProvider;
         this.sources = new EnumMetricSource[sourcesIn.length];
         for (int i = 0; i < sourcesIn.length; i++) {
             this.sources[i] = sourcesIn[i];
@@ -131,47 +129,10 @@ public class MetricCalculator<V extends Number> implements IMetricCalculator<V> 
             this.measures.put(System.nanoTime(), this.measurer.measure());
         }
 
-        switch (this.method) {
-            case ALL:
-                for (var entry : this.measures.entrySet()) {
-                    var time = entry.getKey();
-                    var value = entry.getValue();
-                    this.results.put(time, value);
-                }
-                break;
-            case MIN:
-                this.results.put(stopTime, strategy.calculateMin(this.measures));
-                break;
-            case MAX:
-                this.results.put(stopTime, strategy.calculateMax(this.measures));
-                break;
-            case AVG:
-                this.results.put(stopTime, strategy.calculateAverage(this.measures));
-                break;
-            case MEDIAN:
-                this.results.put(stopTime, strategy.calculateMedian(this.measures));
-                break;
-            case FIRST:
-                this.results.put(stopTime, strategy.calculateFirst(this.measures));
-                break;
-            case LAST:
-                this.results.put(stopTime, strategy.calculateLast(this.measures));
-                break;
-            case DIFF:
-                this.results.put(stopTime, strategy.calculateDiff(this.measures));
-                break;
-            case INV_DIFF:
-                this.results.put(stopTime, strategy.calculateInvDiff(this.measures));
-                break;
-            case SUM:
-                this.results.put(stopTime, strategy.calculateSum(this.measures));
-                break;
-            case DIV:
-                this.results.put(stopTime, strategy.calculateDiv(this.measures));
-                break;
-            case MUL:
-                this.results.put(stopTime, strategy.calculateMul(this.measures));
-                break;
+        var strategy = this.strategyProvider.firstOf(this.method);
+        if(strategy == null)
+        {
+            throw new RuntimeException("[ERROR] MetricCalculator : strategy \"" + method + "\" not found !");
         }
     }
 }

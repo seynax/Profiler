@@ -1,10 +1,8 @@
-package fr.seynax.profiler.metric.calculator.strategy;
+package fr.seynax.profiler.metric.calculator.strategy.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GeneralCalculatorStrategy<V extends Number> implements IMetricCalculatorStrategy<V> {
     @Override

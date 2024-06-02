@@ -1,4 +1,4 @@
-package fr.seynax.profiler.metric.calculator.strategy;
+package fr.seynax.profiler.metric.calculator.strategy.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

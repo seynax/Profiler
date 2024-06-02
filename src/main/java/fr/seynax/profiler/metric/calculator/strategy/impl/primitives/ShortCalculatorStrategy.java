@@ -1,6 +1,6 @@
-package fr.seynax.profiler.metric.calculator.strategy.primitives;
+package fr.seynax.profiler.metric.calculator.strategy.impl.primitives;
 
-import fr.seynax.profiler.metric.calculator.strategy.IMetricCalculatorStrategy;
+import fr.seynax.profiler.metric.calculator.strategy.impl.IMetricCalculatorStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
