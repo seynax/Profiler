@@ -3,7 +3,7 @@ package fr.seynax.profiler.metric.calculator;
 import java.util.Map;
 import java.util.Stack;
 
-public interface IMetricCalculator
+public interface IMetricCalculator<V extends Number>
 {
 	EnumMetricMethods method();
 
@@ -11,11 +11,11 @@ public interface IMetricCalculator
 
 	void start();
 
-	void add(double valueIn);
-	void addAll(double... valuesIn);
+	void add(V valueIn);
+	void addAll(V... valuesIn);
 
 	void stop();
 
-	Map<Long, Double> measures();
-	Map<Long, Double> results();
+	Map<Long, V> measures();
+	Map<Long, V> results();
 }

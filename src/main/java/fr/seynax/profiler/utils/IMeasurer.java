@@ -1,6 +1,6 @@
 package fr.seynax.profiler.utils;
 
-public interface IMeasurer
+public interface IMeasurer<V extends Number>
 {
-	double measure();
+	V measure();
 }
